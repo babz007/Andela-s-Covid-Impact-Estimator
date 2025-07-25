@@ -1,3 +1,63 @@
+# Andela’s COVID-19 Impact Estimator
+
+_A simplified infection/impact estimator originally built for the 2020 **#BuildForSDG** assessment by Andela & Facebook Developer Circles. Adapted, extended, and maintained by **Adeyemi Aina**._
+
+---
+
+## 1. Why this project matters
+
+During the early COVID-19 outbreak, leaders needed quick, comprehensible numbers: How many people might get infected? How many will need hospital beds, ICU care, or ventilators? What’s the likely economic hit on households? This estimator provides a transparent, open-source way to answer those questions rapidly, using a minimal input set and reproducible logic.
+
+In line with the UN Sustainable Development Goals (SDGs), the tool empowers public institutions, educators, and NGOs to plan resources and mitigate impact—especially where data science capacity is limited.
+
+---
+
+## 2. What the estimator does (at a glance)
+
+- **Accepts a concise JSON payload** describing population, reported cases, time horizon, health-system capacity, and income indicators.  
+- **Computes two scenarios** (“impact” and “severeImpact”) to bracket uncertainty.  
+- **Returns key projections**: infections over time, severe cases, ICU/ventilator needs, hospital bed gaps, and economic loss (“dollars in flight”).  
+- **Is framework-agnostic** (JavaScript core logic; easy to port to Python/Go/Rust).  
+- **Is auditable and testable**: every step is documented, unit-tested, and reproducible.
+
+---
+
+## 3. Inputs
+
+```json
+{
+  "region": {
+    "name": "Africa",
+    "avgAge": 19.7,
+    "avgDailyIncomeInUSD": 4,
+    "avgDailyIncomePopulation": 0.73
+  },
+  "periodType": "days",          // days | weeks | months
+  "timeToElapse": 58,
+  "reportedCases": 674,
+  "population": 66622705,
+  "totalHospitalBeds": 1380614
+}
+
+{
+  "data": { ...inputPayload },
+  "impact": {
+    "currentlyInfected": 3370,
+    "infectionsByRequestedTime": 106146523,
+    "severeCasesByRequestedTime": 15921978,
+    "hospitalBedsByRequestedTime": -1300000,
+    "casesForICUByRequestedTime": 5307326,
+    "casesForVentilatorsByRequestedTime": 2122930,
+    "dollarsInFlight": 281984049
+  },
+  "severeImpact": {
+    "currentlyInfected": 33700,
+    "infectionsByRequestedTime": 1061465230,
+    ...
+  }
+}
+
+
 # #BuildForSDG Cohort-1 Python Assessment
 
 > Build an overly simplified COVID-19 infection impact estimator
